@@ -6,15 +6,23 @@
 	<title>Data Selfie App</title>
 </head>
 <body>
-	<h1>This is a data selfie application</h1>	
+	<h1>This is a data selfie application</h1>
+	<h2>Location:</h2>
+	<p>Latitude: <span id="latitude">&deg;</span></p>
+	<p>Longitude: <span id="longitude">&deg;</span></p>
 
 	<script>
+		function displayCoordinates(coords) {
+			document.getElementById('latitude').textContent = coords.latitude;
+			document.getElementById('longitude').textContent = coords.longitude;
+		}
+		
 		if('geolocation' in Navigator) {
 			console.error('Geolocation NOT available!');
 		} else {
 			console.log('Geolocation available!');
 			navigator.geolocation.getCurrentPosition( (pos) => {
-				console.log(pos.coords);
+				displayCoordinates(pos.coords);
 			})
 		}
 	</script>
