@@ -16,6 +16,23 @@
 			document.getElementById('latitude').textContent = coords.latitude;
 			document.getElementById('longitude').textContent = coords.longitude;
 		}
+
+		function sendCoordinatesToServer(coords) {
+			const data = {
+				'latitude': coords.latitude,
+				'longitude': coords.longitude
+			};
+
+			const options = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			};
+
+			fetch('/api', options);
+		}
 		
 		if('geolocation' in Navigator) {
 			console.error('Geolocation NOT available!');
@@ -23,6 +40,7 @@
 			console.log('Geolocation available!');
 			navigator.geolocation.getCurrentPosition( (pos) => {
 				displayCoordinates(pos.coords);
+				sendCoordinatesToServer(pos.coords);
 			})
 		}
 	</script>
