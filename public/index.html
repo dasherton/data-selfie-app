@@ -13,6 +13,9 @@
 			console.error('Geolocation NOT available!');
 		} else {
 			console.log('Geolocation available!');
+			navigator.geolocation.getCurrentPosition( (pos) => {
+				console.log(pos.coords);
+			})
 		}
 	</script>
 </body>
