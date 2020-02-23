@@ -31,7 +31,8 @@
 				body: JSON.stringify(data)
 			};
 
-			fetch('/api', options);
+			fetch('/api', options).then(response => response.json())
+				.then(json => console.log(json));
 		}
 		
 		if('geolocation' in Navigator) {
