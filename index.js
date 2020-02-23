@@ -11,4 +11,5 @@ app.use(express.json({limit: '1mb'}));
 
 app.post('/api', (request, response) => {
 	console.log(request.body);
+	response.end();
 });
