@@ -10,6 +10,7 @@
 	<h2>Location:</h2>
 	<p>Latitude: <span id="latitude">&deg;</span></p>
 	<p>Longitude: <span id="longitude">&deg;</span></p>
+	<button id="submit">Submit</button>
 
 	<script>
 		function displayCoordinates(coords) {
@@ -42,9 +43,14 @@
 			console.log('Geolocation available!');
 			navigator.geolocation.getCurrentPosition( (pos) => {
 				displayCoordinates(pos.coords);
-				sendCoordinatesToServer(pos.coords);
 			})
 		}
+
+		document.getElementById('submit').addEventListener('click', (e) => {
+			navigator.geolocation.getCurrentPosition( (pos) => {
+				sendCoordinatesToServer(pos.coords);
+			});
+		})
 	</script>
 </body>
 </html>
