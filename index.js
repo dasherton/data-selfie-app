@@ -14,12 +14,15 @@ const database = new Datastore('database.db');
 database.loadDatabase();
 
 app.post('/api', (request, response) => {
-	console.log(request.body);
-	database.insert(request.body);
-	console.log(database);
+	const data = request.body;
+	const timestamp = Date.now();
+	data.timestamp = timestamp;
+
+	database.insert(data);
 
 	response.json({
 		status: 'success',
+		timestamp: timestamp,
 		latitude: request.body.latitude,
 		longitude: request.body.longitude
 	});
