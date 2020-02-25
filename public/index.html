@@ -17,7 +17,7 @@
 			document.getElementById('longitude').textContent = coords.longitude;
 		}
 
-		function sendCoordinatesToServer(coords) {
+		async function sendCoordinatesToServer(coords) {
 			const data = {
 				'latitude': coords.latitude,
 				'longitude': coords.longitude
@@ -31,8 +31,9 @@
 				body: JSON.stringify(data)
 			};
 
-			fetch('/api', options).then(response => response.json())
-				.then(json => console.log(json));
+			const response = await fetch('/api', options);
+			const json = await response.json();
+			console.log(json);
 		}
 		
 		if('geolocation' in Navigator) {
