@@ -10,6 +10,7 @@
 	<h2>Location:</h2>
 	<p>Latitude: <span id="latitude">&deg;</span></p>
 	<p>Longitude: <span id="longitude">&deg;</span></p>
+	<input type="text" name="name" id="name-input">
 	<button id="submit">Submit</button>
 
 	<script>
@@ -18,12 +19,26 @@
 			document.getElementById('longitude').textContent = coords.longitude;
 		}
 
-		async function sendCoordinatesToServer(coords) {
-			const data = {
-				'latitude': coords.latitude,
-				'longitude': coords.longitude
-			};
+		function submitDataToServer() {
+			const name = document.getElementById('name-input').value;
 
+			if(name.length ==0) {
+				alert("You must provide a name!");
+				return;
+			}
+
+			navigator.geolocation.getCurrentPosition( (pos) => {
+				const data = {
+					'latitude': pos.coords.latitude,
+					'longitude': pos.coords.longitude,
+					'name': name
+				};
+
+				sendDataToServer(data);
+			});
+		}
+
+		async function sendDataToServer(data) {
 			const options = {
 				method: 'POST',
 				headers: {
@@ -43,14 +58,10 @@
 			console.log('Geolocation available!');
 			navigator.geolocation.getCurrentPosition( (pos) => {
 				displayCoordinates(pos.coords);
-			})
+			});
 		}
 
-		document.getElementById('submit').addEventListener('click', (e) => {
-			navigator.geolocation.getCurrentPosition( (pos) => {
-				sendCoordinatesToServer(pos.coords);
-			});
-		})
+		document.getElementById('submit').addEventListener('click', submitDataToServer);
 	</script>
 </body>
 </html>
